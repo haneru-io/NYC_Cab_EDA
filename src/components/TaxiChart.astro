@@ -1,0 +1,50 @@
+---
+const { data, title, xField, yField } = Astro.props;
+const chartId = `vis-${title.replace(/\s+/g, "-").toLowerCase()}`;
+---
+
+<div class="chart-container">
+  <h3>{title}</h3>
+  <div id={chartId} style="width: 100%; min-height: 300px;"></div>
+</div>
+
+<script
+  type="application/json"
+  id={`data-${chartId}`}
+  set:html={JSON.stringify(data)}
+/>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+<script define:vars={{ chartId, xField, yField }}>
+  // 2. Fetch the data from the script tag and parse it
+  const dataElement = document.getElementById(`data-${chartId}`);
+  const chartData = JSON.parse(dataElement.textContent);
+
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 300,
+    data: { values: chartData },
+    mark: { type: "bar", tooltip: true },
+    encoding: {
+      x: { field: xField, type: "ordinal", title: "Hour" },
+      y: { field: yField, type: "quantitative", title: "Trips" },
+      color: { value: "#eab308" },
+    },
+  };
+
+  vegaEmbed(`#${chartId}`, spec).catch(console.error);
+</script>
+
+<style>
+  .chart-container {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 2rem;
+  }
+</style>

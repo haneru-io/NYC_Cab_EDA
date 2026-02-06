@@ -1,11 +1,33 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import TaxiChart from "../components/TaxiChart.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 1. Import your DuckDB-generated JSON
+import temporalData from "../data/temporal_pulse.json";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="NYC Taxi EDA">
+  <main>
+    <h1>🚕 NYC Taxi Analytics</h1>
+
+    <TaxiChart
+      title="Temporal Pulse"
+      data={temporalData}
+      xField="hour"
+      yField="trip_count"
+    />
+  </main>
 </Layout>
+
+<style>
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: sans-serif;
+  }
+  h1 {
+    text-align: center;
+    color: #111827;
+  }
+</style>
