@@ -1,46 +1,30 @@
-# Astro Starter Kit: Basics
+# 🚕 NYC Taxi Trip Analysis (EDA)
 
-```sh
-npm create astro@latest -- --template basics
-```
+A high-performance Exploratory Data Analysis of the NYC Taxi & Limousine Commission (TLC) dataset. This project uses **DuckDB** for lightning-fast analytical queries and **Astro** for a zero-JS-overhead presentation.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 📊 Project Highlights
 
-## 🚀 Project Structure
+- **Engine:** DuckDB (Processing 1M+ rows in milliseconds)
+- **Frontend:** Astro (Static Site Generation)
+- **Visuals:** Vega-Lite (Declarative data visualizations)
+- **Data Source:** [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🔍 Case Studies
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+1. **Temporal Pulse:** Hourly demand patterns across NYC.
+2. **Tip Culture:** Correlation between payment types and gratuity.
+3. **Airport Premium:** Analysis of JFK/LGA flat-rate efficiency.
+   ... (Add others as you build them)
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🛠️ Tech Stack & Architecture
 
-## 🧞 Commands
+- **SQL:** All data transformations are done via DuckDB CLI and exported to JSON.
+- **Automation:** A shell script handles the data pipeline from Parquet to Site.
+- **Deployment:** Hosted on Netlify.
 
-All commands are run from the root of the project, from a terminal:
+## 🚀 Local Development
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. Clone the repo.
+2. Place the TLC Parquet file in `/public`.
+3. Run `./process_data.sh` to generate the analytical JSON files.
+4. Run `npm run dev` to start the dashboard.
