@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# raw data files (large parquet/csv inputs — not for version control)
+public/*.parquet
+
