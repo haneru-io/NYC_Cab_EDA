@@ -1,6 +1,41 @@
 ---
-const { data, title, xField, yField } = Astro.props;
-const chartId = `vis-${title.replace(/\s+/g, "-").toLowerCase()}`;
+interface Props {
+  data: unknown[];
+  title: string;
+  xField: string;
+  yField: string;
+  /** Axis titles (default: field name with first letter capitalised). */
+  xTitle?: string;
+  yTitle?: string;
+  /** Vega-Lite x type — defaults to "ordinal" (works well for hour-of-day). */
+  xType?: "ordinal" | "nominal" | "quantitative" | "temporal";
+  /** Bar fill colour. */
+  color?: string;
+}
+
+const {
+  data,
+  title,
+  xField,
+  yField,
+  xTitle,
+  yTitle,
+  xType = "ordinal",
+  color = "#eab308",
+} = Astro.props;
+
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const xAxisTitle = xTitle ?? cap(xField);
+const yAxisTitle = yTitle ?? cap(yField);
+// Sanitise to a valid CSS-selector-safe id: lowercase, only [a-z0-9-].
+// Anything else (spaces, %, /, etc.) collapses to a single hyphen so titles
+// like "Avg tip %" don't break querySelector.
+const chartId =
+  "vis-" +
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 ---
 
 <div class="chart-container">
@@ -18,8 +53,7 @@ const chartId = `vis-${title.replace(/\s+/g, "-").toLowerCase()}`;
 <script is:inline src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
 <script is:inline src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
-<script define:vars={{ chartId, xField, yField }}>
-  // 2. Fetch the data from the script tag and parse it
+<script define:vars={{ chartId, xField, yField, xType, xAxisTitle, yAxisTitle, color }}>
   const dataElement = document.getElementById(`data-${chartId}`);
   const chartData = JSON.parse(dataElement.textContent);
 
@@ -30,9 +64,9 @@ const chartId = `vis-${title.replace(/\s+/g, "-").toLowerCase()}`;
     data: { values: chartData },
     mark: { type: "bar", tooltip: true },
     encoding: {
-      x: { field: xField, type: "ordinal", title: "Hour" },
-      y: { field: yField, type: "quantitative", title: "Trips" },
-      color: { value: "#eab308" },
+      x: { field: xField, type: xType, title: xAxisTitle },
+      y: { field: yField, type: "quantitative", title: yAxisTitle },
+      color: { value: color },
     },
   };
 
@@ -42,9 +76,14 @@ const chartId = `vis-${title.replace(/\s+/g, "-").toLowerCase()}`;
 <style>
   .chart-container {
     background: white;
-    padding: 1rem;
+    padding: 1rem 1.25rem 1.25rem;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #e5e7eb;
     margin-bottom: 2rem;
+  }
+  .chart-container h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.05rem;
+    color: #111827;
   }
 </style>

@@ -1,0 +1,16 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ZoneChart from "../components/ZoneChart.astro";
+
+import zoneData from "../data/top_zones.json";
+---
+
+<Layout title="Top Pickup Zones — NYC Taxi EDA">
+  <h1>Top Pickup Zones</h1>
+  <p class="lede">
+    The 20 NYC TLC zones with the most pickups in Jan 2025. Bars are
+    coloured by borough. First step toward zone-level / mapping work.
+  </p>
+
+  <ZoneChart title="Top 20 pickup zones" data={zoneData} />
+</Layout>

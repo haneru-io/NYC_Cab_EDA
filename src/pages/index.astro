@@ -1,36 +1,83 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import TaxiChart from "../components/TaxiChart.astro";
 import HydrationProbe from "../components/HydrationProbe.tsx";
 
-// 1. Import your DuckDB-generated JSON
-import temporalData from "../data/temporal_pulse.json";
+const studies = [
+  {
+    href: "/temporal",
+    title: "Temporal Pulse",
+    blurb: "When is NYC busiest? Trip counts by hour of day.",
+  },
+  {
+    href: "/generosity",
+    title: "Generosity Clock",
+    blurb:
+      "Does NYC tip more at 3am than 3pm? Average tip percentage by hour, credit-card rides only.",
+  },
+  {
+    href: "/zones",
+    title: "Top Pickup Zones",
+    blurb:
+      "The 20 busiest pickup zones in NYC — first toe in the water for zone-level / mapping work.",
+  },
+];
 ---
 
-<Layout title="NYC Taxi EDA">
-  <main>
-    <h1>🚕 NYC Taxi Analytics</h1>
+<Layout title="NYC Taxi EDA" isHome={true}>
+  <h1>NYC Taxi EDA</h1>
+  <p class="lede">
+    Exploratory analysis of the NYC TLC Yellow Cab dataset (Jan 2025).
+    Powered by DuckDB at build time, Vega-Lite in the browser.
+  </p>
 
-    <HydrationProbe client:visible />
+  <ul class="study-list">
+    {
+      studies.map((s) => (
+        <li>
+          <a href={s.href} class="study-card">
+            <h2>{s.title}</h2>
+            <p>{s.blurb}</p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
 
-    <TaxiChart
-      title="Temporal Pulse"
-      data={temporalData}
-      xField="hour"
-      yField="trip_count"
-    />
-  </main>
+  <HydrationProbe client:visible />
 </Layout>
 
 <style>
-  main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: sans-serif;
+  .study-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    gap: 1rem;
   }
-  h1 {
-    text-align: center;
+  .study-card {
+    display: block;
+    padding: 1.25rem 1.5rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #eab308;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .study-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+  .study-card h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.15rem;
     color: #111827;
+  }
+  .study-card p {
+    margin: 0;
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.45;
   }
 </style>

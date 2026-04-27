@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TaxiChart from "../components/TaxiChart.astro";
+
+import generosityData from "../data/generosity_clock.json";
+---
+
+<Layout title="Generosity Clock — NYC Taxi EDA">
+  <h1>Generosity Clock</h1>
+  <p class="lede">
+    Average tip percentage by hour of pickup. Credit-card rides only — cash
+    tips aren't recorded by the meter.
+  </p>
+
+  <TaxiChart
+    title="Avg tip % by hour of day"
+    data={generosityData}
+    xField="hour"
+    yField="avg_tip_pct"
+    xTitle="Hour of day"
+    yTitle="Avg tip %"
+    color="#10b981"
+  />
+</Layout>

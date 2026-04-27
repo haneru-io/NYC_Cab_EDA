@@ -1,9 +1,11 @@
 ---
 interface Props {
 	title?: string;
+	/** When true, hide the "← Home" link in the header (use on the landing page). */
+	isHome?: boolean;
 }
 
-const { title = "NYC Taxi EDA" } = Astro.props;
+const { title = "NYC Taxi EDA", isHome = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -17,15 +19,70 @@ const { title = "NYC Taxi EDA" } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<slot />
+		<header class="site-header">
+			<div class="header-inner">
+				<a href="/" class="brand">🚕 NYC Taxi EDA</a>
+				{!isHome && <a href="/" class="back-link">← Home</a>}
+			</div>
+		</header>
+		<main class="page">
+			<slot />
+		</main>
 	</body>
 </html>
 
-<style>
+<style is:global>
 	html,
 	body {
 		margin: 0;
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
+		font-family:
+			-apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+		background: #f9fafb;
+		color: #111827;
+	}
+
+	.site-header {
+		background: #111827;
+		color: white;
+		border-bottom: 3px solid #eab308;
+	}
+	.header-inner {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 0.9rem 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.brand {
+		color: white;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 1.05rem;
+	}
+	.back-link {
+		color: #fde68a;
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+	.back-link:hover {
+		text-decoration: underline;
+	}
+
+	.page {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 4rem;
+	}
+
+	h1 {
+		margin: 0 0 0.25rem;
+		font-size: 1.75rem;
+	}
+	h1 + p.lede {
+		margin: 0 0 2rem;
+		color: #4b5563;
 	}
 </style>

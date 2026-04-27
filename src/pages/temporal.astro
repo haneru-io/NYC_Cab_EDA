@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TaxiChart from "../components/TaxiChart.astro";
+
+import temporalData from "../data/temporal_pulse.json";
+---
+
+<Layout title="Temporal Pulse — NYC Taxi EDA">
+  <h1>Temporal Pulse</h1>
+  <p class="lede">When is NYC busiest? Trip counts by hour of pickup, Jan 2025.</p>
+
+  <TaxiChart
+    title="Trips by hour of day"
+    data={temporalData}
+    xField="hour"
+    yField="trip_count"
+    xTitle="Hour of day"
+    yTitle="Trips"
+  />
+</Layout>

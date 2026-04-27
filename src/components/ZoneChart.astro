@@ -1,0 +1,95 @@
+---
+/**
+ * Horizontal ranked bar chart — used for "top N pickup/dropoff zones".
+ * Categorical y-axis (zone), quantitative x-axis (count). Bars are coloured
+ * by borough so multi-borough rankings stay readable at a glance.
+ */
+interface Props {
+  data: Array<{
+    zone_name: string;
+    borough: string;
+    trip_count: number;
+  }>;
+  title: string;
+}
+
+const { data, title } = Astro.props;
+// Sanitise to a valid CSS-selector-safe id (see TaxiChart for rationale).
+const chartId =
+  "vis-" +
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+// 30px per row gives enough breathing room for the zone labels.
+const chartHeight = Math.max(300, data.length * 30);
+---
+
+<div class="chart-container">
+  <h3>{title}</h3>
+  <div id={chartId} style={`width: 100%; min-height: ${chartHeight}px;`}></div>
+</div>
+
+<script
+  type="application/json"
+  id={`data-${chartId}`}
+  set:html={JSON.stringify(data)}
+/>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script is:inline src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+<script define:vars={{ chartId, chartHeight }}>
+  const dataElement = document.getElementById(`data-${chartId}`);
+  const chartData = JSON.parse(dataElement.textContent);
+
+  const spec = {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: chartHeight,
+    data: { values: chartData },
+    mark: { type: "bar", tooltip: true },
+    encoding: {
+      y: {
+        field: "zone_name",
+        type: "nominal",
+        sort: "-x",
+        title: null,
+        axis: { labelLimit: 200 },
+      },
+      x: {
+        field: "trip_count",
+        type: "quantitative",
+        title: "Trips",
+      },
+      color: {
+        field: "borough",
+        type: "nominal",
+        legend: { title: "Borough" },
+      },
+      tooltip: [
+        { field: "zone_name", title: "Zone" },
+        { field: "borough", title: "Borough" },
+        { field: "trip_count", title: "Trips", format: "," },
+      ],
+    },
+  };
+
+  vegaEmbed(`#${chartId}`, spec).catch(console.error);
+</script>
+
+<style>
+  .chart-container {
+    background: white;
+    padding: 1rem 1.25rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 2rem;
+  }
+  .chart-container h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.05rem;
+    color: #111827;
+  }
+</style>
