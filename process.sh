@@ -40,8 +40,7 @@ run_query() {
 echo "Starting NYC Taxi Data Pipeline..."
 
 run_query "temporal_pulse"
-
-# Pending — uncomment once queries/generosity_clock.sql is filled in:
-# run_query "generosity_clock"
+run_query "generosity_clock"
+run_query "top_zones"
 
 echo "All data exported to $OUTPUT_DIR"

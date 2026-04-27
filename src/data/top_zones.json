@@ -1,0 +1,22 @@
+[
+	{"zone_name":"Midtown Center","borough":"Manhattan","trip_count":169977},
+	{"zone_name":"Upper East Side South","borough":"Manhattan","trip_count":163703},
+	{"zone_name":"Upper East Side North","borough":"Manhattan","trip_count":155647},
+	{"zone_name":"JFK Airport","borough":"Queens","trip_count":146135},
+	{"zone_name":"Times Sq/Theatre District","borough":"Manhattan","trip_count":125829},
+	{"zone_name":"Penn Station/Madison Sq West","borough":"Manhattan","trip_count":119130},
+	{"zone_name":"Midtown East","borough":"Manhattan","trip_count":117930},
+	{"zone_name":"Lincoln Square East","borough":"Manhattan","trip_count":110584},
+	{"zone_name":"Upper West Side South","borough":"Manhattan","trip_count":96614},
+	{"zone_name":"Midtown North","borough":"Manhattan","trip_count":95905},
+	{"zone_name":"Union Sq","borough":"Manhattan","trip_count":95896},
+	{"zone_name":"Murray Hill","borough":"Manhattan","trip_count":95635},
+	{"zone_name":"East Chelsea","borough":"Manhattan","trip_count":91240},
+	{"zone_name":"LaGuardia Airport","borough":"Queens","trip_count":89657},
+	{"zone_name":"Clinton East","borough":"Manhattan","trip_count":84136},
+	{"zone_name":"Lenox Hill West","borough":"Manhattan","trip_count":81660},
+	{"zone_name":"East Village","borough":"Manhattan","trip_count":81576},
+	{"zone_name":"West Village","borough":"Manhattan","trip_count":77354},
+	{"zone_name":"Midtown South","borough":"Manhattan","trip_count":76066},
+	{"zone_name":"Lenox Hill East","borough":"Manhattan","trip_count":75093}
+]
