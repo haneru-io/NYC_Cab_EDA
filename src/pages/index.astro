@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import TaxiChart from "../components/TaxiChart.astro";
+import HydrationProbe from "../components/HydrationProbe.tsx";
 
 // 1. Import your DuckDB-generated JSON
 import temporalData from "../data/temporal_pulse.json";
@@ -9,6 +10,8 @@ import temporalData from "../data/temporal_pulse.json";
 <Layout title="NYC Taxi EDA">
   <main>
     <h1>🚕 NYC Taxi Analytics</h1>
+
+    <HydrationProbe client:visible />
 
     <TaxiChart
       title="Temporal Pulse"
